@@ -11,6 +11,7 @@ public class PhotonManager : Photon.PunBehaviour
     public static GameObject localPlayer;
     public GameObject joinBTN;
     public Text guideText;
+    public InputField inputField;
 
     #endregion
 
@@ -76,7 +77,6 @@ public class PhotonManager : Photon.PunBehaviour
         //유저가 마스터 클라이언트인 경우
         if (PhotonNetwork.isMasterClient)
         {
-            print("OnLevelisLoading");
             //mainScene 접속
             PhotonNetwork.LoadLevel("mainScene");
         }
@@ -85,16 +85,14 @@ public class PhotonManager : Photon.PunBehaviour
     //Callback : 레벨이 로드되었을때
     private void OnLevelWasLoaded(int level)
     {
-        print("OnLevelisLoaded");
         if (!PhotonNetwork.inRoom) return;
-        print("OnLevelWasLoaded");
-        
         //Photon View 스크립트가 들어간 프리팹 객체를 로드한다.
         localPlayer = PhotonNetwork.Instantiate(
             "Capsule",
             new Vector3(0, 1, 0),
             Quaternion.identity, 0
             );
+        PhotonNetwork.playerName = inputField.text;
     }
     #endregion
 }
